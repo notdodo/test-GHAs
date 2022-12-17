@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pipenv install --deploy --dev --verbose
+          pipenv install --verbose
           
       - name: Run Python
         run: |
