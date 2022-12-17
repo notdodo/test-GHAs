@@ -32,4 +32,4 @@ jobs:
           
       - name: Run Python
         run: |
-          python main.py
+          pipenv run python main.py
