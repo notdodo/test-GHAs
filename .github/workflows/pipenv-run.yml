@@ -25,7 +25,7 @@ jobs:
           uses: tj-actions/changed-files@v34
           with:
             files: |
-              ./subdir1/subdir2/**
+              ./subdir1/subdir2/subdir3/**
   
         - name: Set up Python
           uses: actions/setup-python@v4
@@ -49,4 +49,4 @@ jobs:
             for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
               echo "$file was changed"
             done
-            pipenv run python main.py
+            pipenv run python main.py -a $file
