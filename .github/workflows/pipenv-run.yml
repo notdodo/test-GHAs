@@ -8,6 +8,7 @@ on:
 jobs:
   run-python:
     runs-on: ubuntu-latest
+    environment: cs
     defaults:
       run:
         working-directory: ./subdir1/subdir2/
