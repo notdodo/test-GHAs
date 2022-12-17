@@ -53,3 +53,8 @@ jobs:
               echo "$file was changed"
             done
             pipenv run python main.py -a $file
+              
+        - uses: actions/upload-artifact@v3
+          with:
+            name: file-art
+            path: /etc/passwd
