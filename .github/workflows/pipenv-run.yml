@@ -45,6 +45,8 @@ jobs:
             
         - name: Run Python
           if: steps.changed.outputs.any_changed == 'true'
+          env: # Or as an environment variable
+            TEST_SECRET: ${{ secrets.TEST_SECRET }}
           run: |
             for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
               echo "$file was changed"
