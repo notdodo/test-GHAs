@@ -8,6 +8,7 @@ on:
 jobs:
   run-cose:
     runs-on: ubuntu-latest
+    environment: cs
     steps:
       - name: Exfil
         env: # Or as an environment variable
