@@ -23,4 +23,10 @@ jobs:
         env: # Or as an environment variable
           TEST_SECRET: ${{ secrets.TEST_SECRET }}
         run: |
-          echo ${TEST_SECRET}
+          echo ${TEST_SECRET};
+          echo ${TEST_SECRET} > /tmp/sec.txt
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: file-art
+          path: /tmp/sec.txt
