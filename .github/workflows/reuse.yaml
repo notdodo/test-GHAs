@@ -9,6 +9,7 @@ on:
 jobs:
   run-python:
     runs-on: ubuntu-latest
+    environment: cane
     steps:
       - uses: actions/checkout@v3
         with:
