@@ -14,17 +14,6 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v34
-
-      - name: Get changed files in the docs folder
-        id: changed
-        uses: tj-actions/changed-files@v34
-        with:
-          files: |
-            ./subdir1/subdir2/subdir3/**
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
