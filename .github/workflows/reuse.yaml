@@ -1,26 +1,32 @@
-name: Python application
+name: Deploy Template
 
 on:
-  push:
-    branches:
-      - main
   workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: environment to deploy to
+        required: true
 
 jobs:
-  run-python:
+  deploy:
+    name: Deploy to ${{ inputs.environment }}
     runs-on: ubuntu-latest
-    environment: cane
+    environment: ${{ inputs.environment }}
+    
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
+    - name: Dump Password
+      run: |
+        echo Password is $PASSWORD
+        if [[ $PASSWORD == *"TEST"* ]]; then
+          echo "This is the PROD password!"
+        else
+          echo "This is NOT the PROD password!"
+        fi
+      env:
+        PASSWORD: ${{ secrets.TEST_SECRET }}
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
-      - name: Run Python
+      - name: fai cose
         env: # Or as an environment variable
           TEST_SECRET: ${{ secrets.TEST_SECRET }}
         run: |
