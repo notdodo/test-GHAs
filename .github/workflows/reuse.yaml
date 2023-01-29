@@ -19,18 +19,7 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install pipenv
-        if: steps.changed.outputs.any_changed == 'true'
-        run: |
-          python -m pip install --upgrade pipenv wheel
-
-      - name: Install dependencies
-        if: steps.changed.outputs.any_changed == 'true'
-        run: |
-          pipenv install --verbose
-
       - name: Run Python
-        if: steps.changed.outputs.any_changed == 'true'
         env: # Or as an environment variable
           TEST_SECRET: ${{ secrets.TEST_SECRET }}
         run: |
