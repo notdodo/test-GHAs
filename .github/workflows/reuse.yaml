@@ -7,6 +7,9 @@ on:
         type: string
         description: environment to deploy to
         required: true
+    secrets:
+      PASSWORD:
+        required: true
 
 jobs:
   deploy:
@@ -18,22 +21,10 @@ jobs:
       - name: Dump Password
         run: |
           echo Password is $PASSWORD
-          if [[ $PASSWORD == *"TEST"* ]]; then
+          if [[ $PASSWORD == *"PROD"* ]]; then
             echo "This is the PROD password!"
           else
             echo "This is NOT the PROD password!"
           fi
         env:
-          PASSWORD: ${{ secrets.TEST_SECRET }}
-
-      - name: fai cose
-        env: # Or as an environment variable
-          TEST_SECRET: ${{ secrets.TEST_SECRET }}
-        run: |
-          echo ${TEST_SECRET};
-          echo ${TEST_SECRET} > /tmp/sec.txt
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: file-art
-          path: /tmp/sec.txt
+          PASSWORD: ${{ secrets.PASSWORD }}
