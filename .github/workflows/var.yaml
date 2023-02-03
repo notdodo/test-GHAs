@@ -22,4 +22,15 @@ jobs:
           else
             echo "rip"
           fi
+          if [[ ${{ secrets.PASSWORD }} == *"PASSWORD"* ]]; then
+            echo "This is the password!"
+          else
+            echo "rip"
+          fi
+          TESTP=${{ secrets.PASSWORD }}
+          if [[ $TESTP == *"PASSWORD"* ]]; then
+            echo "This is the password!"
+          else
+            echo "rip"
+          fi
       - run: env
