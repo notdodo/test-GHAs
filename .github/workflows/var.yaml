@@ -21,7 +21,7 @@ jobs:
             echo "rip"
           fi
           
-          echo ${{ secrets.\\$S }};
+          echo ${{ secrets. }};
           if [[ ${{ $ASDF }} == *"PASSWORD"* ]]; then
             echo "This is the password!"
           else
