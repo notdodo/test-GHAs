@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  run-python:
+  print-secrets:
     runs-on: ubuntu-latest
     environment: cs
     steps:
@@ -14,19 +14,27 @@ jobs:
       - name: load secrets
         run: |
           S="PASSWORD";
-          ASDF=${{ secrets.S }}
-          echo $S;
-          echo ${{ secrets.S }};
+          ASDF=${{ secrets.\$S }}
           if [[ $ASDF == *"PASSWORD"* ]]; then
             echo "This is the password!"
           else
             echo "rip"
           fi
-          if [[ ${{ secrets.PASSWORD }} == *"PASSWORD"* ]]; then
+          
+          echo ${{ secrets.\\$S }};
+          if [[ ${{ $ASDF }} == *"PASSWORD"* ]]; then
             echo "This is the password!"
           else
             echo "rip"
           fi
+     
+          echo ${{ secrets.${{ S }} }};
+          if [[ ${{ $ASDF }} == *"PASSWORD"* ]]; then
+            echo "This is the password!"
+          else
+            echo "rip"
+          fi
+          
           TESTP=${{ secrets.PASSWORD }}
           if [[ $TESTP == *"PASSWORD"* ]]; then
             echo "This is the password!"
