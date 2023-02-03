@@ -14,7 +14,12 @@ jobs:
       - name: load secrets
         run: |
           S="PASSWORD";
-          echo ${{ secrets.s }} >> $GITHUB_ENV;
+          ASDF=${{ secrets.s }}
           echo $S;
           echo ${{ secrets.S }};
+          if [[ $ASDF == *"PASSWORD"* ]]; then
+            echo "This is the password!"
+          else
+            echo "rip"
+          fi
       - run: env
