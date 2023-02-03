@@ -14,7 +14,7 @@ jobs:
       - name: load secrets
         run: |
           S="PASSWORD";
-          ASDF=${{ secrets.s }}
+          ASDF=${{ secrets.S }}
           echo $S;
           echo ${{ secrets.S }};
           if [[ $ASDF == *"PASSWORD"* ]]; then
