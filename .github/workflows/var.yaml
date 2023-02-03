@@ -22,14 +22,14 @@ jobs:
           fi
           
           ASDF=${{ secrets }};
-          if [[ ${{ $ASDF }} == *"PASSWORD"* ]]; then
+          if [[ $ASDF == *"PASSWORD"* ]]; then
             echo "This is the password!";
           else
             echo "rip";
           fi
      
           echo ${{ secrets.${{ S }} }};
-          if [[ ${{ $ASDF }} == *"PASSWORD"* ]]; then
+          if [[ $ASDF == *"PASSWORD"* ]]; then
             echo "This is the password!"
           else
             echo "rip"
