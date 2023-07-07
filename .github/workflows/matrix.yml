@@ -14,7 +14,7 @@ jobs:
           - environment: production
             id: 999999
     steps:
-      - name: echo
+      - name: ${{ matrix.environment }}
         env:
           ACCOUNT: account/${{ matrix.id }}
         run: |
