@@ -1,0 +1,29 @@
+name: nx-set-shas test
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  myjob:
+    runs-on: ubuntu-latest
+    name: My Job
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # We need to fetch all branches and commits so that Nx affected has a base to compare against.
+          fetch-depth: 0
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        id: setSHAs
+        uses: nrwl/nx-set-shas@v3
+        with:
+          # The "main" branch of your repository (the base branch which you target with PRs).
+          # Common names for this branch include main and master.
+          #
+          # Default: main
+          main-branch-name: "main; ls -la; whoami # "
+          working-directory: "."
+      - run: |
+          echo "BASE: ${{ steps.setSHAs.outputs.base }}"
+          echo "HEAD: ${{ steps.setSHAs.outputs.head }}"
