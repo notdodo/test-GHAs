@@ -15,7 +15,7 @@ jobs:
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         id: setSHAs
-        uses: notdodo/nx-set-shas-maioche@main
+        uses: AvalZ/nx-set-shas@main
         with:
           # The "main" branch of your repository (the base branch which you target with PRs).
           # Common names for this branch include main and master.
