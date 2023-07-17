@@ -1,4 +1,4 @@
-name: nx-set-shas test
+name: nx-set-shas NEW test
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
 jobs:
   myjob:
     runs-on: ubuntu-latest
-    name: My Job
+    name: My Job NEW
     steps:
       - uses: actions/checkout@v3
         with:
