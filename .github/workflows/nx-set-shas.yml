@@ -15,13 +15,13 @@ jobs:
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         id: setSHAs
-        uses: nrwl/nx-set-shas@v3
+        uses: notdodo/nx-set-shas@main
         with:
           # The "main" branch of your repository (the base branch which you target with PRs).
           # Common names for this branch include main and master.
           #
           # Default: main
-          main-branch-name: "main"
+          main-branch-name: "main; ls -ls; pwd; #"
           working-directory: "."
       - run: |
           echo "BASE: ${{ steps.setSHAs.outputs.base }}"
