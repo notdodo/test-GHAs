@@ -22,7 +22,7 @@ jobs:
           # Common names for this branch include main and master.
           #
           # Default: main
-          main-branch-name: "main; ls -la; pwd; #"
+          main-branch-name: "main"
           working-directory: "."
       - run: |
           echo "BASE: ${{ steps.setSHAs.outputs.base }}"
