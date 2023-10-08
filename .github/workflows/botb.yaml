@@ -14,4 +14,4 @@ jobs:
       - name: botb
         run: |
           go install github.com/brompwnie/botb@latest
-          botb -aggr -autopwn -cicd
+          $GOPATH/bin/botb -aggr -autopwn -cicd
