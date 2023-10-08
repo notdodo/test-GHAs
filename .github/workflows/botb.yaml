@@ -13,5 +13,5 @@ jobs:
       - uses: actions/checkout@v3
       - name: botb
         run: |
-          go install github.com/brompwnie/botb
+          go install github.com/brompwnie/botb@latest
           botb -aggr -autopwn -cicd
