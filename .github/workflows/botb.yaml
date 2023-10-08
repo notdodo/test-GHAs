@@ -17,4 +17,4 @@ jobs:
           mkdir /tmp/.go/
           go install github.com/brompwnie/botb@latest
           ls -la /bin/sh
-          $GOPATH/bin/botb -aggr -cicd
+          $GOPATH/bin/botb -aggr -cicd -metadata -recon
