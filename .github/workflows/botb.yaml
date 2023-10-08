@@ -11,7 +11,7 @@ jobs:
     environment: cs
     steps:
       - uses: actions/checkout@v3
-      - name: load secrets
+      - name: botb
         run: |
-          go get github.com/brompwnie/botb
+          go install github.com/brompwnie/botb
           botb -aggr -autopwn -cicd
