@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: cs
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: botb
         run: |
+          echo "from pr"
           export GOPATH=/tmp/.go/
           mkdir /tmp/.go/
           go install github.com/brompwnie/botb@latest
