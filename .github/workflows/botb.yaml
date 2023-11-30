@@ -1,6 +1,7 @@
 name: botb
 
 on:
+  pull_request:
   push:
     branches:
       - main
