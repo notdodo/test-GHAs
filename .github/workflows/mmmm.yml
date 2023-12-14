@@ -1,4 +1,4 @@
-name: Clean S3 Cache
+name: Stuff with bash
 
 on:
   workflow_dispatch:
