@@ -1,9 +1,7 @@
 name: Var
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   print-secrets:
