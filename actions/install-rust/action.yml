@@ -17,4 +17,3 @@ runs:
       run: |
         ls
       shell: bash
-      working-directory: ${{ inputs.working-directory }}

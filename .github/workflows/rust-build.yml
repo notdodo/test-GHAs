@@ -6,6 +6,10 @@ on:
         type: string
         default: .
         description: "Directory where to execute workflow actions. Defaults to '.'"
+      rust-toolchain-version:
+        required: false
+        default: "almeno 3"
+        type: string
 
 jobs:
   cargo_build:
@@ -22,3 +26,4 @@ jobs:
       - uses: notdodo/test-GHAs/actions/install-rust@main
         with:
           rust-toolchain: ${{ inputs.rust-toolchain-version }}
+          working-directory: ${{ inputs.working-directory }}
