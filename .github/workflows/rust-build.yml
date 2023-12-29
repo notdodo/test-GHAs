@@ -1,0 +1,24 @@
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        required: false
+        type: string
+        default: .
+        description: "Directory where to execute workflow actions. Defaults to '.'"
+
+jobs:
+  cargo_build:
+    name: Cargo Build
+    runs-on: ${{ inputs.runs-on }}
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: ls
+        run: |
+          ls -la
+      - uses: notdodo/test-GHAs/actions/install-rust@main
+        with:
+          rust-toolchain: ${{ inputs.rust-toolchain-version }}

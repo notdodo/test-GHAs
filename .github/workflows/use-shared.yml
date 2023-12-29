@@ -1,0 +1,10 @@
+name: "Use shared"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: notdodo/test-GHAs/.github/workflows/rust-build.yml@main
+    with:
+      working-directory: "ok"

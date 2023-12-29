@@ -1,0 +1,15 @@
+name: "Install Rust"
+description: "Install Rust"
+inputs:
+  rust-toolchain:
+    description: "Rust version"
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - id: ls-cache
+      name: Cache
+      run: |
+        ls
+      shell: bash
