@@ -10,7 +10,7 @@ on:
 jobs:
   cargo_build:
     name: Cargo Build
-    runs-on: ${{ inputs.runs-on }}
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}
