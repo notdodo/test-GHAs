@@ -16,6 +16,9 @@ def main():
 
     my_output = f"Hello {my_input}"
 
+    print(my_input)
+    print(my_output)
+
     set_github_action_output("myOutput", my_output)
 
 
