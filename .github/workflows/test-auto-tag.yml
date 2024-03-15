@@ -1,0 +1,15 @@
+name: My Workflow
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run action
+
+        # Put your action repo here
+        uses: notdodo/test-GHAs/auto-tag@master
+
+        # Put an example of your mandatory inputs here
+        with:
+          myInput: world
