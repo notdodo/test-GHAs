@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
 import os
-import sys
-import git
 
 # Config
 default_semvar_bump = os.getenv("DEFAULT_BUMP", "minor")
@@ -24,10 +22,6 @@ patch_string_token = os.getenv("PATCH_STRING_TOKEN", "#patch")
 none_string_token = os.getenv("NONE_STRING_TOKEN", "#none")
 branch_history = os.getenv("BRANCH_HISTORY", "compare")
 force_without_changes = os.getenv("FORCE_WITHOUT_CHANGES", "false").lower() == "true"
-
-# Set Git safe directory
-repo = git.Repo(os.getenv("GITHUB_WORKSPACE"))
-repo.git.config("safe.directory", "/github/workspace")
 
 os.chdir(os.path.join(os.getenv("GITHUB_WORKSPACE"), source))
 
