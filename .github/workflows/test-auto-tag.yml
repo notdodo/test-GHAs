@@ -15,3 +15,7 @@ jobs:
         # Put an example of your mandatory inputs here
         with:
           myInput: world
+      - run: |
+          echo "Hello $1"
+          time=$(date)
+          echo "time=$time" >> $GITHUB_OUTPUT
