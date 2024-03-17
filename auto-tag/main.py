@@ -91,8 +91,6 @@ def check_bump_strategy_since_last_tag(
         for strategy in strategies:
             if f"[#{strategy.lower()}]" in commit.commit.message:
                 return BumpStrategy(strategy)
-        if commit.commit.sha == last_available_tag.commit:
-            break
     return config.DEFAULT_BUMP_STRATEGY
 
 
