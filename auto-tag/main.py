@@ -45,9 +45,7 @@ class Configuration:
 
 config = Configuration(
     DEFAULT_BUMP_STRATEGY=BumpStrategy(
-        os.environ.get(
-            "INPUT_DEFAULT_BUMP_STRATEGY", Configuration.DEFAULT_BUMP_STRATEGY.value
-        )
+        os.environ.get("INPUT_BUMP_STRATEGY", Configuration.DEFAULT_BUMP_STRATEGY.value)
     ),
     DEFAULT_BRANCH=os.environ.get("INPUT_MAIN_BRANCH", Configuration.DEFAULT_BRANCH),
     PREFIX=os.environ.get("INPUT_PREFIX", Configuration.PREFIX),
