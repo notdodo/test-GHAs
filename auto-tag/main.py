@@ -45,12 +45,12 @@ class Configuration:
 
 
 config = Configuration(
-    BumpStrategy(
+    DEFAULT_BUMP_STRATEGY=BumpStrategy(
         os.environ.get("INPUT_DEFAULT_BUMP_STRATEGY", BumpStrategy.MINOR.value)
     ),
-    os.environ.get("INPUT_MAIN_BRANCH", Configuration.DEFAULT_BRANCH),
-    os.environ.get("INPUT_PREFIX", Configuration.PREFIX),
-    os.environ.get("INPUT_SUFFIX", Configuration.SUFFIX),
+    DEFAULT_BRANCH=os.environ.get("INPUT_MAIN_BRANCH", Configuration.DEFAULT_BRANCH),
+    PREFIX=os.environ.get("INPUT_PREFIX", Configuration.PREFIX),
+    SUFFIX=os.environ.get("INPUT_SUFFIX", Configuration.SUFFIX),
 )
 
 if os.environ.get("GITHUB_REF_NAME") != config.DEFAULT_BRANCH:
