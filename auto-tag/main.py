@@ -135,11 +135,7 @@ new_tag = bump_tag_version(bump_strategy, last_tag)
 last_commit = repo.get_commit(
     os.environ.get("GITHUB_SHA", repo.get_commits().get_page(0)[0].sha)
 )
-new_tag_date = (
-    last_commit.commit.last_modified_datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
-    if last_commit.commit.last_modified_datetime
-    else datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-)
+new_tag_date = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
 if last_commit.commit.sha == last_tag.commit:
     print("Nothing to do")
