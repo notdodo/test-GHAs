@@ -9,7 +9,7 @@ from datetime import datetime
 from enum import Enum
 
 import github
-from github import Commit, Repository
+from github import Repository
 from semver import Version
 
 
@@ -92,14 +92,7 @@ def check_bump_strategy_since_last_tag(
     return config.DEFAULT_BUMP_STRATEGY
 
 
-def get_latest_commit(repository: Repository.Repository) -> Commit.Commit:
-    """Get the latest commit from the default branch"""
-    return repository.get_commits()[0]
-
-
-def bump_tag_version(
-    strategy: BumpStrategy, last_available_tag: Tag, repository: Repository.Repository
-) -> Tag:
+def bump_tag_version(strategy: BumpStrategy, last_available_tag: Tag) -> Tag:
     """Create a new Tag resource with the increased version number"""
     current_version = Version.parse(
         last_available_tag.name.removeprefix(config.PREFIX).removesuffix(config.SUFFIX)
@@ -112,10 +105,9 @@ def bump_tag_version(
     elif strategy == BumpStrategy.PATCH:
         new_version = current_version.bump_patch()
 
-    last_available_commit = get_latest_commit(repository)
     return Tag(
         name=config.PREFIX + str(new_version) + config.SUFFIX,
-        commit=last_available_commit.sha,
+        commit=os.environ.get("GITHUB_SHA", ""),
     )
 
 
@@ -127,8 +119,10 @@ if bump_strategy == BumpStrategy.SKIP:
     print("No need to create a new tag, skipping")
     sys.exit()
 
-new_tag = bump_tag_version(bump_strategy, last_tag, repo)
-last_commit = get_latest_commit(repo)
+new_tag = bump_tag_version(bump_strategy, last_tag)
+last_commit = repo.get_commit(
+    os.environ.get("GITHUB_SHA", repo.get_commits().get_page(0)[0].sha)
+)
 new_tag_date = (
     last_commit.commit.last_modified_datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
     if last_commit.commit.last_modified_datetime
