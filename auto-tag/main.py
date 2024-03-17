@@ -95,13 +95,6 @@ def check_bump_strategy_since_last_tag(
         since=last_available_tag.date,
     )
     for commit in last_commits_since_tag:
-        print(
-            commit.commit.sha,
-            commit.commit.message,
-            commit.commit.last_modified_datetime,
-            os.environ.get("GITHUB_SHA"),
-            last_available_tag.date,
-        )
         for strategy in strategies:
             if f"[#{strategy.lower()}]" in commit.commit.message:
                 return BumpStrategy(strategy)
