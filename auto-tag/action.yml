@@ -2,9 +2,18 @@ name: "Python Container Action Template"
 description: "Get started with Python Container actions"
 author: "Jacob Tomlinson"
 inputs:
-  myInput:
+  bump_strategy:
     description: "Input to use"
-    default: "world"
+    default: "skip"
+  prefix:
+    description: ""
+    default: ""
+  suffix:
+    description: ""
+    default: ""
+  main_branch:
+    description: ""
+    default: "main"
 outputs:
   myOutput:
     description: "Output from the action"
