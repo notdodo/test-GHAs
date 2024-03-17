@@ -13,3 +13,5 @@ jobs:
           suffix: "-test"
           main_branch: "main"
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          printenv
