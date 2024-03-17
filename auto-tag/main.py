@@ -133,4 +133,4 @@ tag = repo.create_git_tag(
     ),
 )
 print(f"Creating new tag: {new_tag.name}")
-# repo.create_git_ref(f"refs/tags/{new_tag.name}", tag.sha)
+repo.create_git_ref(f"refs/tags/{new_tag.name}", tag.sha)
