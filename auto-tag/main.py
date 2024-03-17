@@ -91,6 +91,7 @@ def bump_tag_version(
     current_version = Version.parse(
         last_tag.name.removeprefix(config.PREFIX).removesuffix(config.SUFFIX)
     )
+    new_version = current_version
     if strategy == BumpStrategy.MAJOR:
         new_version = current_version.bump_major()
     elif strategy == BumpStrategy.MINOR:
