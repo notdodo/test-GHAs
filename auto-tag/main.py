@@ -133,10 +133,6 @@ last_commit = repo.get_commit(
     os.environ.get("GITHUB_SHA", repo.get_commits().get_page(0)[0].sha)
 )
 
-# if last_commit.commit.sha == last_tag.commit:
-#     print("Nothing to do")
-#     sys.exit()
-
 tag = repo.create_git_tag(
     tag=new_tag.name,
     message=new_tag.message,
