@@ -80,6 +80,7 @@ def get_latest_tag_or_default(repository: Repository.Repository) -> Tag:
             name=config.PREFIX + "0.0.0" + config.SUFFIX,
             commit=repository.get_commits()[0].sha,
         )
+        config.DEFAULT_BUMP_STRATEGY = BumpStrategy.PATCH
     print(last_available_tag)
     return last_available_tag
 
