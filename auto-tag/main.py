@@ -83,4 +83,4 @@ t = repo.create_git_tag(
     InputGitAuthor(c.author.name, str(c.author.email), str(output_date)),
 )
 print(t)
-repo.create_git_ref(f"refs/tags/{new_tag.name}", t.sha)
+# repo.create_git_ref(f"refs/tags/{new_tag.name}", t.sha)
