@@ -88,6 +88,8 @@ def check_bump_strategy_since_last_tag(
         sha=last_available_tag.commit
     )  # TODO: this should be since=datetime
     for commit in last_commits_since_tag:
+        if commit.commit.sha == last_available_tag.commit:
+            break
         print(
             commit.commit.message,
             commit.commit.sha,
