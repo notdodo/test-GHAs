@@ -95,6 +95,7 @@ def check_bump_strategy_since_last_tag(
         print(
             commit.commit.sha,
             commit.commit.message,
+            commit.commit.last_modified_datetime,
             os.environ.get("GITHUB_SHA"),
             last_available_tag.date,
         )
@@ -135,7 +136,6 @@ new_tag = bump_tag_version(bump_strategy, last_tag)
 last_commit = repo.get_commit(
     os.environ.get("GITHUB_SHA", repo.get_commits().get_page(0)[0].sha)
 )
-new_tag_date = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
 if last_commit.commit.sha == last_tag.commit:
     print("Nothing to do")
@@ -147,7 +147,9 @@ tag = repo.create_git_tag(
     object=new_tag.commit,
     type=new_tag.type,
     tagger=github.InputGitAuthor(
-        str(last_commit.author.name), str(last_commit.author.email), str(new_tag_date)
+        str(last_commit.author.name),
+        str(last_commit.author.email),
+        str(datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")),
     ),
 )
 
