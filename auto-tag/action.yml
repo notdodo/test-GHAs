@@ -14,6 +14,9 @@ inputs:
   main_branch:
     description: ""
     default: "main"
+  github_token:
+    description: ""
+    default: ${{ secrets.GITHUB_TOKEN }}
 outputs:
   myOutput:
     description: "Output from the action"
