@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
+"""
+Python script to generate a new GitHub tag bumping its version following semver rules
+"""
+
 import os
+import sys
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
@@ -10,23 +15,29 @@ from semver import Version
 
 
 class BumpStrategy(Enum):
-    MAJOR = "major"
-    MINOR = "minor"
-    PATCH = "patch"
-    SKIP = "skip"
+    """Enum containing the different version bump strategy for semver"""
+
+    MAJOR: str = "major"
+    MINOR: str = "minor"
+    PATCH: str = "patch"
+    SKIP: str = "skip"
 
 
 @dataclass
-class CustomTag:
+class Tag:
+    """Tag resource"""
+
     name: str
     commit: str
     message: str = ""
     type: str = "commit"
-    last_modified_datetime: datetime = datetime.now()
 
 
 @dataclass
 class Configuration:
+    """Configuration resource"""
+
+    # pylint: disable=invalid-name
     DEFAULT_BUMP_STRATEGY: BumpStrategy = BumpStrategy.SKIP
     DEFAULT_BRANCH: str = "main"
     PREFIX: str = "v"
@@ -44,36 +55,37 @@ config = Configuration(
 
 if os.environ.get("GITHUB_REF_NAME") != config.DEFAULT_BRANCH:
     print("Not running from the default branch")
-    quit()
+    sys.exit()
 
 
 def github_auth() -> Repository.Repository:
+    """Authenticate to GitHub and set the scope to this repository"""
     auth = github.Github(os.environ.get("INPUT_GITHUB_TOKEN", ""))
     return auth.get_repo(os.environ.get("GITHUB_REPOSITORY", ""))
 
 
-def get_latest_tag_or_default(repo: Repository.Repository) -> CustomTag:
+def get_latest_tag_or_default(repository: Repository.Repository) -> Tag:
+    """Get the latest available tag on the repository"""
     try:
-        last_tag = repo.get_tags().get_page(0)[0]
-        last_tag = CustomTag(
-            name=last_tag.name,
-            commit=last_tag.commit.sha,
-            last_modified_datetime=last_tag.last_modified_datetime,
+        _last_tag = repository.get_tags().get_page(0)[0]
+        last_available_tag = Tag(
+            name=_last_tag.name,
+            commit=_last_tag.commit.sha,
         )
     except IndexError:
-        last_tag = CustomTag(
+        last_available_tag = Tag(
             name=config.PREFIX + "0.0.0" + config.SUFFIX,
-            commit=repo.get_commits()[0].sha,
-            last_modified_datetime=datetime.now(),
+            commit=repository.get_commits()[0].sha,
         )
-    return last_tag
+    return last_available_tag
 
 
 def check_bump_strategy_since_last_tag(
-    repo: Repository.Repository, last_tag: CustomTag
+    repository: Repository.Repository, last_available_tag: Tag
 ) -> BumpStrategy:
+    """Select the correct bump strategy based on commit message or the default one"""
     strategies = [strategy.value for strategy in BumpStrategy]
-    last_commits_since_tag = repo.get_commits(sha=last_tag.commit)
+    last_commits_since_tag = repository.get_commits(sha=last_available_tag.commit)
     for commit in last_commits_since_tag:
         for strategy in strategies:
             if f"[#{strategy.lower()}]" in commit.commit.message:
@@ -81,15 +93,17 @@ def check_bump_strategy_since_last_tag(
     return config.DEFAULT_BUMP_STRATEGY
 
 
-def get_last_commit(repo: Repository.Repository) -> Commit.Commit:
-    return repo.get_commits()[0]
+def get_latest_commit(repository: Repository.Repository) -> Commit.Commit:
+    """Get the latest commit from the default branch"""
+    return repository.get_commits()[0]
 
 
 def bump_tag_version(
-    strategy: BumpStrategy, last_tag: CustomTag, repo: Repository.Repository
-) -> CustomTag:
+    strategy: BumpStrategy, last_available_tag: Tag, repository: Repository.Repository
+) -> Tag:
+    """Create a new Tag resource with the increased version number"""
     current_version = Version.parse(
-        last_tag.name.removeprefix(config.PREFIX).removesuffix(config.SUFFIX)
+        last_available_tag.name.removeprefix(config.PREFIX).removesuffix(config.SUFFIX)
     )
     new_version = current_version
     if strategy == BumpStrategy.MAJOR:
@@ -99,13 +113,11 @@ def bump_tag_version(
     elif strategy == BumpStrategy.PATCH:
         new_version = current_version.bump_patch()
 
-    last_commit = get_last_commit(repo)
-    new_tag = CustomTag(
+    last_available_commit = get_latest_commit(repository)
+    return Tag(
         name=config.PREFIX + str(new_version) + config.SUFFIX,
-        commit=last_commit.sha,
-        last_modified_datetime=last_commit.commit.last_modified_datetime,
+        commit=last_available_commit.sha,
     )
-    return new_tag
 
 
 repo = github_auth()
@@ -114,15 +126,19 @@ bump_strategy = check_bump_strategy_since_last_tag(repo, last_tag)
 
 if bump_strategy == BumpStrategy.SKIP:
     print("No need to create a new tag, skipping")
-    quit()
+    sys.exit()
 
 new_tag = bump_tag_version(bump_strategy, last_tag, repo)
-last_commit = get_last_commit(repo)
-new_tag_date = last_commit.commit.last_modified_datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
+last_commit = get_latest_commit(repo)
+new_tag_date = (
+    last_commit.commit.last_modified_datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
+    if last_commit.commit.last_modified_datetime
+    else datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+)
 
 if last_commit.commit.sha == last_tag.commit:
     print("Nothing to do")
-    quit()
+    sys.exit()
 
 tag = repo.create_git_tag(
     new_tag.name,
@@ -130,7 +146,7 @@ tag = repo.create_git_tag(
     new_tag.commit,
     new_tag.type,
     github.InputGitAuthor(
-        last_commit.author.name, str(last_commit.author.email), str(new_tag_date)
+        str(last_commit.author.name), str(last_commit.author.email), str(new_tag_date)
     ),
 )
 print(f"Creating new tag: {new_tag.name}")
