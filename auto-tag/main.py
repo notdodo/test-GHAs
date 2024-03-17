@@ -82,7 +82,7 @@ def get_latest_tag_or_default(repository: Repository.Repository) -> Tag:
         )
         # Force creation of a new tag
         config.DEFAULT_BUMP_STRATEGY = BumpStrategy.PATCH
-    print(last_available_tag)
+    print(f"Last tag: {last_available_tag}")
     return last_available_tag
 
 
