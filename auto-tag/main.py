@@ -42,6 +42,7 @@ class Configuration:
     DEFAULT_BRANCH: str = "main"
     PREFIX: str = "v"
     SUFFIX: str = ""
+    DRY_RUN: bool = False
 
 
 config = Configuration(
@@ -51,6 +52,7 @@ config = Configuration(
     DEFAULT_BRANCH=os.environ.get("INPUT_MAIN_BRANCH", Configuration.DEFAULT_BRANCH),
     PREFIX=os.environ.get("INPUT_PREFIX", Configuration.PREFIX),
     SUFFIX=os.environ.get("INPUT_SUFFIX", Configuration.SUFFIX),
+    DRY_RUN=os.environ.get("INPUT_DRY_RUN", Configuration.DRY_RUN) == "True",
 )
 
 if os.environ.get("GITHUB_REF_NAME") != config.DEFAULT_BRANCH:
@@ -148,4 +150,5 @@ tag = repo.create_git_tag(
 )
 
 print(f"Creating new tag: {new_tag.name}")
-# repo.create_git_ref(f"refs/tags/{new_tag.name}", tag.sha)
+if not config.DRY_RUN:
+    repo.create_git_ref(f"refs/tags/{new_tag.name}", tag.sha)
