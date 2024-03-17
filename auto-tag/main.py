@@ -45,7 +45,7 @@ config = Configuration(
     os.environ.get("INPUT_SUFFIX", Configuration.SUFFIX),
 )
 
-auth = Auth.Token(os.environ.get("GITHUB_TOKEN"))
+auth = Auth.Token(os.environ.get("INPUT_GITHUB_TOKEN"))
 g = Github(auth=auth)
 repo = g.get_repo("notdodo/test-GHAs")
 

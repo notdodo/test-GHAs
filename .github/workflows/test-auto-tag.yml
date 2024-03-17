@@ -12,3 +12,4 @@ jobs:
           prefix: "v"
           suffix: "-test"
           main_branch: "main"
+          github_token: ${{ secrets.GITHUB_TOKEN }}

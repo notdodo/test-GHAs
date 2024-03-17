@@ -16,7 +16,7 @@ inputs:
     default: "main"
   github_token:
     description: ""
-    default: ${{ secrets.GITHUB_TOKEN }}
+    default: ""
 outputs:
   myOutput:
     description: "Output from the action"
