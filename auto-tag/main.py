@@ -58,11 +58,7 @@ def get_latest_tag_or_default(repo: Repository.Repository) -> CustomTag:
         last_tag = CustomTag(
             name=last_tag.name,
             commit=last_tag.commit.sha,
-            last_modified_datetime=(
-                last_tag.last_modified_datetime
-                if last_tag.last_modified_datetime
-                else datetime.now()
-            ),
+            last_modified_datetime=last_tag.last_modified_datetime,
         )
     except IndexError:
         last_tag = CustomTag(
@@ -106,11 +102,7 @@ def bump_tag_version(
     new_tag = CustomTag(
         name=config.PREFIX + str(new_version) + config.SUFFIX,
         commit=last_commit.sha,
-        last_modified_datetime=(
-            last_commit.commit.last_modified_datetime
-            if last_commit.commit.last_modified_datetime
-            else datetime.now()
-        ),
+        last_modified_datetime=last_commit.commit.last_modified_datetime,
     )
     return new_tag
 
@@ -125,11 +117,11 @@ if bump_strategy == BumpStrategy.SKIP:
 
 new_tag = bump_tag_version(bump_strategy, last_tag, repo)
 last_commit = get_last_commit(repo)
-new_tag_date = (
-    last_commit.commit.last_modified_datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
-    if last_commit.commit.last_modified_datetime
-    else datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-)
+new_tag_date = last_commit.commit.last_modified_datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+if last_commit.commit.sha == last_tag.commit:
+    print("Nothing to do")
+    quit()
 
 tag = repo.create_git_tag(
     new_tag.name,
@@ -137,8 +129,8 @@ tag = repo.create_git_tag(
     new_tag.commit,
     new_tag.type,
     github.InputGitAuthor(
-        str(last_commit.author.name), str(last_commit.author.email), str(new_tag_date)
+        last_commit.author.name, str(last_commit.author.email), str(new_tag_date)
     ),
 )
 print(f"Creating new tag: {new_tag.name}")
-repo.create_git_ref(f"refs/tags/{new_tag.name}", tag.sha)
+# repo.create_git_ref(f"refs/tags/{new_tag.name}", tag.sha)
