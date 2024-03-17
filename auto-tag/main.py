@@ -73,12 +73,7 @@ latest_push = repo.get_commits()[0]
 
 c = repo.get_commit(latest_push.sha)
 
-print(c.author.email)
-print(c.committer)
-print(c.last_modified_datetime)
-
 output_date = c.last_modified_datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
-
 
 t = repo.create_git_tag(
     new_tag.name,
