@@ -84,9 +84,16 @@ def check_bump_strategy_since_last_tag(
 ) -> BumpStrategy:
     """Select the correct bump strategy based on commit message or the default one"""
     strategies = [strategy.value for strategy in BumpStrategy]
-    last_commits_since_tag = repository.get_commits(sha=last_available_tag.commit)
+    last_commits_since_tag = repository.get_commits(
+        sha=last_available_tag.commit
+    )  # TODO: this should be since=datetime
     for commit in last_commits_since_tag:
-        print(commit.commit.message)
+        print(
+            commit.commit.message,
+            commit.commit.sha,
+            last_available_tag.commit,
+            os.environ.get("GITHUB_SHA"),
+        )
         for strategy in strategies:
             if f"[#{strategy.lower()}]" in commit.commit.message:
                 return BumpStrategy(strategy)
