@@ -9,6 +9,7 @@ jobs:
         uses: notdodo/test-GHAs/auto-tag@main
         with:
           bump_strategy: skip
-          prefix: "v"
-          main_branch: "main"
+          prefix: v
+          main_branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry_run: true
