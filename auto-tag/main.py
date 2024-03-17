@@ -142,5 +142,11 @@ tag = repo.create_git_tag(
         str(last_commit.author.name), str(last_commit.author.email), str(new_tag_date)
     ),
 )
+
+print(last_tag)
+print(new_tag)
+print(bump_strategy)
+print(last_commit)
+
 print(f"Creating new tag: {new_tag.name}")
 repo.create_git_ref(f"refs/tags/{new_tag.name}", tag.sha)
