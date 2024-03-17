@@ -40,14 +40,14 @@ class Configuration:
 
 config = Configuration(
     os.environ.get("INPUT_BUMP_STRATEGY", BumpStrategy.SKIP),
-    os.environ.get("INPUT_MAIN_BRANCH", os.environ.get("GITHUB_BASE_REF")),
+    os.environ.get("INPUT_MAIN_BRANCH", os.environ.get("GITHUB_REF_NAME")),
     os.environ.get("INPUT_PREFIX", Configuration.PREFIX),
     os.environ.get("INPUT_SUFFIX", Configuration.SUFFIX),
 )
 
 auth = Auth.Token(os.environ.get("INPUT_GITHUB_TOKEN"))
 g = Github(auth=auth)
-repo = g.get_repo("notdodo/test-GHAs")
+repo = g.get_repo(os.environ.get("GITHUB_REPOSITORY"))
 
 try:
     latest_tag = repo.get_tags().get_page(0)[0]
