@@ -6,11 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Run action
-
-        # Put your action repo here
         uses: notdodo/test-GHAs/auto-tag@main
-
-        # Put an example of your mandatory inputs here
         with:
           bump_strategy: minor
           prefix: "v"
