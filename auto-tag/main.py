@@ -96,6 +96,7 @@ def check_bump_strategy_since_last_tag(
             commit.commit.sha,
             commit.commit.message,
             commit.commit.last_modified_datetime,
+            commit.commit.last_modified,
             os.environ.get("GITHUB_SHA"),
             last_available_tag.date,
         )
