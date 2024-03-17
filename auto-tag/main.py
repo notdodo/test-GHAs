@@ -80,7 +80,7 @@ def check_bump_strategy_since_last_tag(
     last_commits_since_tag = repo.get_commits(sha=last_tag.commit)
     for commit in last_commits_since_tag:
         for strategy in strategies:
-            if f"[#{strategy.upper()}]" in commit.commit.message:
+            if f"[#{strategy.lower()}]" in commit.commit.message:
                 return BumpStrategy(strategy)
     return config.DEFAULT_BUMP_STRATEGY
 
@@ -137,7 +137,7 @@ tag = repo.create_git_tag(
     new_tag.commit,
     new_tag.type,
     github.InputGitAuthor(
-        last_commit.author.name, str(last_commit.author.email), str(new_tag_date)
+        str(last_commit.author.name), str(last_commit.author.email), str(new_tag_date)
     ),
 )
 print(f"Creating new tag: {new_tag.name}")
