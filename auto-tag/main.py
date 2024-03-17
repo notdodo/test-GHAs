@@ -80,6 +80,7 @@ def get_latest_tag_or_default(repository: Repository.Repository) -> Tag:
             name=config.PREFIX + "0.0.0" + config.SUFFIX,
             commit=repository.get_commits()[0].sha,
         )
+        # Force creation of a new tag
         config.DEFAULT_BUMP_STRATEGY = BumpStrategy.PATCH
     print(last_available_tag)
     return last_available_tag
@@ -140,9 +141,9 @@ last_commit = repo.get_commit(
     os.environ.get("GITHUB_SHA", repo.get_commits().get_page(0)[0].sha)
 )
 
-if last_commit.commit.sha == last_tag.commit:
-    print("Nothing to do")
-    sys.exit()
+# if last_commit.commit.sha == last_tag.commit:
+#     print("Nothing to do")
+#     sys.exit()
 
 tag = repo.create_git_tag(
     tag=new_tag.name,
