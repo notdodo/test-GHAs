@@ -1,7 +1,7 @@
 FROM python:3-slim AS builder
 HEALTHCHECK NONE
 
-ENV POETRY_VERSION=1.7.0
+ENV POETRY_VERSION=1.8.2
 ENV PATH="${PATH}:/app/.local/bin"
 ENV POETRY_CACHE_DIR=/app/.cache
 
