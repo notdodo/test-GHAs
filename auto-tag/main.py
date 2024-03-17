@@ -30,6 +30,7 @@ class Tag:
     commit: str
     message: str = ""
     type: str = "commit"
+    date: datetime = datetime.now()
 
 
 @dataclass
@@ -70,6 +71,7 @@ def get_latest_tag_or_default(repository: Repository.Repository) -> Tag:
         last_available_tag = Tag(
             name=_last_tag.name,
             commit=_last_tag.commit.sha,
+            date=_last_tag.commit.last_modified_datetime or datetime.now(),
         )
     except IndexError:
         last_available_tag = Tag(
@@ -85,15 +87,9 @@ def check_bump_strategy_since_last_tag(
     """Select the correct bump strategy based on commit message or the default one"""
     strategies = [strategy.value for strategy in BumpStrategy]
     last_commits_since_tag = repository.get_commits(
-        sha=last_available_tag.commit
-    )  # TODO: this should be since=datetime
+        since=last_available_tag.date,
+    )
     for commit in last_commits_since_tag:
-        print(
-            commit.commit.sha,
-            last_available_tag.commit,
-            commit.commit.message,
-            os.environ.get("GITHUB_SHA"),
-        )
         for strategy in strategies:
             if f"[#{strategy.lower()}]" in commit.commit.message:
                 return BumpStrategy(strategy)
@@ -142,11 +138,11 @@ if last_commit.commit.sha == last_tag.commit:
     sys.exit()
 
 tag = repo.create_git_tag(
-    new_tag.name,
-    new_tag.message,
-    new_tag.commit,
-    new_tag.type,
-    github.InputGitAuthor(
+    tag=new_tag.name,
+    message=new_tag.message,
+    object=new_tag.commit,
+    type=new_tag.type,
+    tagger=github.InputGitAuthor(
         str(last_commit.author.name), str(last_commit.author.email), str(new_tag_date)
     ),
 )
