@@ -45,7 +45,9 @@ class Configuration:
 
 config = Configuration(
     DEFAULT_BUMP_STRATEGY=BumpStrategy(
-        os.environ.get("INPUT_DEFAULT_BUMP_STRATEGY", BumpStrategy.MINOR.value)
+        os.environ.get(
+            "INPUT_DEFAULT_BUMP_STRATEGY", Configuration.DEFAULT_BUMP_STRATEGY.value
+        )
     ),
     DEFAULT_BRANCH=os.environ.get("INPUT_MAIN_BRANCH", Configuration.DEFAULT_BRANCH),
     PREFIX=os.environ.get("INPUT_PREFIX", Configuration.PREFIX),
@@ -88,17 +90,11 @@ def check_bump_strategy_since_last_tag(
         sha=last_available_tag.commit
     )  # TODO: this should be since=datetime
     for commit in last_commits_since_tag:
-        if commit.commit.sha == last_available_tag.commit:
-            break
-        print(
-            commit.commit.message,
-            commit.commit.sha,
-            last_available_tag.commit,
-            os.environ.get("GITHUB_SHA"),
-        )
         for strategy in strategies:
             if f"[#{strategy.lower()}]" in commit.commit.message:
                 return BumpStrategy(strategy)
+        if commit.commit.sha == last_available_tag.commit:
+            break
     return config.DEFAULT_BUMP_STRATEGY
 
 
