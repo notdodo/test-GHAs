@@ -7,6 +7,8 @@ jobs:
       - uses: actions/checkout@master
       - name: Run action
         uses: notdodo/test-GHAs/auto-tag@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           bump_strategy: minor
           prefix: "v"
