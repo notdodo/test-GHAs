@@ -88,6 +88,7 @@ def check_bump_strategy_since_last_tag(
         sha=last_available_tag.commit
     )  # TODO: this should be since=datetime
     for commit in last_commits_since_tag:
+        print(commit.commit, last_commits_since_tag, os.environ.get("GITHUB_SHA"))
         for strategy in strategies:
             if f"[#{strategy.lower()}]" in commit.commit.message:
                 return BumpStrategy(strategy)
@@ -145,10 +146,5 @@ tag = repo.create_git_tag(
     ),
 )
 
-print(last_tag)
-print(new_tag)
-print(bump_strategy)
-print(last_commit)
-
 print(f"Creating new tag: {new_tag.name}")
-repo.create_git_ref(f"refs/tags/{new_tag.name}", tag.sha)
+# repo.create_git_ref(f"refs/tags/{new_tag.name}", tag.sha)
