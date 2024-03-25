@@ -14,3 +14,8 @@ func asdfkj() int {
 	_ = 1 + 1
 	return 0
 }
+
+func asdfjjkj() string {
+	_ = 1 + 1
+	return "0"
+}
