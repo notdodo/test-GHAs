@@ -4,10 +4,10 @@ on:
       runs-on:
         type: string
         default: "ubuntu-latest"
-    secrets:
-      token:
-        description: "asdfa"
-        required: true
+    # secrets:
+    #   token:
+    #     description: "asdfa"
+    #     required: true
 
 jobs:
   gitleaks:
@@ -22,5 +22,5 @@ jobs:
         uses: gitleaks/gitleaks-action@e6dab246340401bf53eec993b8f05aebe80ac636
         # V2.3.4
         env:
-          GITHUB_TOKEN: ${{ secrets.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_VERSION: latest
