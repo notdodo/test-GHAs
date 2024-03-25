@@ -1,0 +1,8 @@
+name: Gitleaks
+on:
+  push:
+
+jobs:
+  gitleaks:
+    uses: notdodo/test-GHAs/.github/workflows/gitleaks.yml@testa
+    # v0.1.1
