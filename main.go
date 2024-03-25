@@ -9,3 +9,8 @@ func SomeFunc1() bool {
 func main() {
 	SomeFunc1()
 }
+
+func asdf() int {
+	_ = 1 + 1
+	return 0
+}
