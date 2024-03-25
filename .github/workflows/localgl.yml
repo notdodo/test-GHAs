@@ -4,7 +4,7 @@ on:
 
 jobs:
   gitleaks:
-    uses: notdodo/test-GHAs/.github/workflows/gitleaks.yml@testa
+    uses: notdodo/test-GHAs/.github/workflows/gitleaks.yml@main
     # v0.1.1
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
