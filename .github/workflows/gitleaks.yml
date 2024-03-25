@@ -4,10 +4,10 @@ on:
       runs-on:
         type: string
         default: "ubuntu-latest"
-     secrets: 
-        github_token:
-            description: "asdfa"
-            required: true
+    secrets:
+      github_token:
+        description: "asdfa"
+        required: true
 
 jobs:
   gitleaks:
