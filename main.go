@@ -10,7 +10,7 @@ func main() {
 	SomeFunc1()
 }
 
-func asdf() int {
+func asdfk() int {
 	_ = 1 + 1
 	return 0
 }
