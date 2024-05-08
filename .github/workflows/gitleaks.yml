@@ -1,0 +1,24 @@
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        type: string
+        default: "ubuntu-latest"
+
+# Comments works only when the workflow is called on `pull_request:`
+jobs:
+  gitleaks:
+    name: gitleaks
+    runs-on: ${{ inputs.runs-on }}
+    if: (github.actor != 'dependabot[bot]')
+    steps:
+      - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b
+        # v4.1.4
+        with:
+          fetch-depth: 0
+      - name: gitleaks
+        uses: gitleaks/gitleaks-action@e6dab246340401bf53eec993b8f05aebe80ac636
+        # v2.3.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_VERSION: latest
