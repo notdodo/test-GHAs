@@ -1,0 +1,41 @@
+name: "release with conditional step"
+
+on:
+  push:
+    tags:
+      - rel-v*
+    paths:
+      - somestuff/**
+      - someotherstuff/**
+      - .github/workflows/release.yml
+
+concurrency: 3
+
+jobs:
+  build-app:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "building app!"
+
+  deploy-app:
+    runs-on: ubuntu-latest
+    steps:
+        - run: echo "deploying app!"
+    needs:
+      - build-app
+
+  deploy-data-artifact:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Get changed files
+          id: changed-files
+          uses: tj-actions/changed-files@v45
+          with:                
+            files: |
+                someotherstuff/**
+            tags_pattern: rel-v*
+        - run: sed -i 's/version = "0.0.0"/version = "${GITHUB_REF_NAME:4}"/' someotherstuff/version
+          if: steps.changed-files.outputs.any_changed == 'true'
+        - run: echo "deploying data artifact! @ version" && cat someotherstuff/version
+    needs:
+        - deploy-app
