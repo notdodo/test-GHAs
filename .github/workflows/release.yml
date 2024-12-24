@@ -34,7 +34,7 @@ jobs:
             files: |
                 someotherstuff/**
             tags_pattern: rel-v*
-        - run: sed -i 's/version = "0.0.0"/version = "${GITHUB_REF_NAME:4}"/' someotherstuff/version
+        - run: sed -i 's/version = "0.0.0"/version = "${GITHUB_REF_NAME:5}"/' someotherstuff/version
           if: steps.changed-files.outputs.any_changed == 'true'
         - run: echo "deploying data artifact! @ version" && cat someotherstuff/version
     needs:
