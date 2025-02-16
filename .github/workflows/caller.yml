@@ -1,10 +1,24 @@
-name: esatto
+name: zizmor#540
 
 on:
   workflow_dispatch:
   push:
 
 jobs:
-  deploy_dev:
-    name: Deploy to Dev
+  invoke_reusable:
+    actions: read # Override reusable setting
+    attestations: write
+    checks: write
+    contents: write
+    deployments: write
+    id-token: write|none
+    issues: write
+    discussions: write
+    packages: write
+    pages: write
+    pull-requests: write
+    repository-projects: write
+    security-events: write
+    statuses: write
+    name: Invoke reusable
     uses: notdodo/test-GHA2/.github/workflows/reusable.yml@main
