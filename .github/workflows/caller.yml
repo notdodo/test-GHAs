@@ -4,23 +4,23 @@ on:
   workflow_dispatch:
   push:
 
+permissions:
+  actions: read # Override reusable setting
+  attestations: write
+  checks: write
+  contents: write
+  deployments: write
+  id-token: write
+  issues: write
+  discussions: write
+  packages: write
+  pages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
 jobs:
   invoke_reusable:
-    permissions:
-      actions: read # Override reusable setting
-      attestations: write
-      checks: write
-      contents: write
-      deployments: write
-      id-token: write|none
-      issues: write
-      discussions: write
-      packages: write
-      pages: write
-      pull-requests: write
-      repository-projects: write
-      security-events: write
-      statuses: write
-    steps:
-      name: Invoke reusable
-      uses: notdodo/test-GHA2/.github/workflows/reusable.yml@main
+    name: Invoke reusable
+    uses: notdodo/test-GHA2/.github/workflows/reusable.yml@main
