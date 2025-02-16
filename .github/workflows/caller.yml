@@ -5,6 +5,7 @@ on:
   push:
 
 permissions:
+  actions: read # Override reusable setting
   attestations: write
   checks: write
   contents: write
