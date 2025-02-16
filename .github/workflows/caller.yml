@@ -1,0 +1,10 @@
+name: esatto
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  deploy_dev:
+    name: Deploy to Dev
+    uses: notdodo/test-GHA2/.github/workflows/reusable.yml@main
