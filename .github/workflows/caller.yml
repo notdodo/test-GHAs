@@ -21,5 +21,6 @@ jobs:
     repository-projects: write
     security-events: write
     statuses: write
+  steps:
     name: Invoke reusable
     uses: notdodo/test-GHA2/.github/workflows/reusable.yml@main
