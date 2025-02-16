@@ -6,6 +6,7 @@ on:
 
 jobs:
   invoke_reusable:
+  permissions:
     actions: read # Override reusable setting
     attestations: write
     checks: write
