@@ -10,4 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Tag
-        run: echo ${{ github.ref_name }}
+        run: echo ${${{ github.ref_name }}/ciao/uno}
+ 
