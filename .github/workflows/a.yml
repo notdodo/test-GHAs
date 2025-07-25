@@ -1,0 +1,13 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - '**'
+
+jobs:
+  build_windows:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Tag
+        run: echo ${{github.ref_name}}
