@@ -26,7 +26,7 @@ jobs:
       - id: latest
         run: |
           LATEST_VERSION=$(curl https://registry.terraform.io/v1/providers/${{ env.NAMESPACE }}/${{ env.NAME }}/versions | jq '[.versions[].version] | sort_by(split(".")|map(tonumber)) | last')
-          echo "latest=$LATEST_VERSION" >>> "$GITHUB_OUTPUT"
+          echo "latest=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
       - id: current
         run: |
           git fetch --tagswr
