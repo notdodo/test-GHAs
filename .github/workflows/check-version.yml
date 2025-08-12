@@ -40,6 +40,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag -a "${{ env.NEW }}"
+          git tag -a "${{ env.NEW }}" -m "pulumi-crowdstrike-v${{ env.NEW }}"
           git push --tags
           gh api repos/${{ github.repository }}/dispatches -f event_type="push_sdk" \ -f client_payloads='{"version": "${{ env.NEW }}"}'
