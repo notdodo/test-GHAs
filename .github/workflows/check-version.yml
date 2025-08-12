@@ -29,7 +29,7 @@ jobs:
           echo "latest=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
       - id: current
         run: |
-          git fetch --tagswr
+          git fetch --tags
           search="pulumi-crowdstrike-v*"
           latest_tag=$(git tag -l "$search" --sort=-v:refname | head -n1)
           latest="${latest_tag##-v}"
