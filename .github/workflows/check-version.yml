@@ -35,6 +35,7 @@ jobs:
       - if: steps.latest.outputs.latest != steps.current.outputs.current
         env:
           NEW: ${{ steps.latest.outputs.latest }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
