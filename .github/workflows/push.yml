@@ -1,0 +1,12 @@
+on:
+  repository_dispatch:
+    types: [build_sdk]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "uuuuuuuuuuh!"
+          echo ${{ github.event.client_payload }}
+          echo ${{ github.event.client_payload.version }}
