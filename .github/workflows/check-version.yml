@@ -21,8 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         # v4.2.2
-        with:
-          persist-credentials: false
       - id: latest
         run: |
           LATEST_VERSION=$(curl https://registry.terraform.io/v1/providers/${{ env.NAMESPACE }}/${{ env.NAME }}/versions | jq '[.versions[].version] | sort_by(split(".")|map(tonumber)) | last')
